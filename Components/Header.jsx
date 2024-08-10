@@ -28,7 +28,6 @@ export default function Navbar() {
         <button className="btn ring-2 ring-primary-500 bg-transparent font-semibold text-lg">
           حساب کاربری
         </button>
-        <button className="bg-gray-600 btn">fsdfsdfdf</button>
       </nav>
     </div>
   );
