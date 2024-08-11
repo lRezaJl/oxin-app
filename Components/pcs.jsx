@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-slate-200">
       {/* تنظیم فاصله بین ستون‌ها با استفاده از gap در اندازه‌های مختلف */}
-      <div className="grid max-sm:grid-cols-4 max-md:grid-cols-6 grid-cols-8 gap-15 md:gap-4 mx-5">
+      <div className="grid max-sm:grid-cols-4 max-md:grid-cols-6 grid-cols-6 gap-15 md:gap-4 mx-5">
         {/* ستون 1 */}
         <div className="flex flex-col my-3 md:my-4">
           {[26, 27, 28, 29, 30].map((number) => (
@@ -32,7 +32,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-1"></div>
 
         {/* ستون 2 */}
         <div className="flex flex-col my-3 md:my-4">
@@ -68,7 +68,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-1"></div>
 
         {/* ستون 4 */}
         <div className="flex flex-col my-3 md:my-4">
@@ -87,7 +87,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="max-sm:col-span-2 sm:col-span-3 md:col-span-4"></div>
+        <div className="max-sm:col-span-2 sm:col-span-3 md:col-span-3"></div>
 
         {/* ستون 5 */}
         <div className="flex flex-col my-3 md:my-4">
@@ -106,7 +106,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-1"></div>
 
         {/* ستون 6 */}
         <div className="flex flex-col my-3 md:my-4">
