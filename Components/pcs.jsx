@@ -1,68 +1,128 @@
-import React from "react";
+import { useState } from "react";
 
 export default function Home() {
+  // ایجاد یک آرایه از وضعیت‌ها برای هر دکمه
+  const [activeButtons, setActiveButtons] = useState(Array(30).fill(false));
+
+  // تابع برای تغییر وضعیت یک دکمه خاص
+  const toggleClass = (index) => {
+    const updatedActiveButtons = [...activeButtons];
+    updatedActiveButtons[index] = !updatedActiveButtons[index];
+    setActiveButtons(updatedActiveButtons);
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="grid grid-cols-8 gap-15">
+    <div className="flex justify-center items-center min-h-screen bg-slate-200">
+      {/* تنظیم فاصله بین ستون‌ها با استفاده از gap در اندازه‌های مختلف */}
+      <div className="grid max-sm:grid-cols-4 max-md:grid-cols-6 grid-cols-8 gap-15 md:gap-4 mx-5">
         {/* ستون 1 */}
-        <div className="flex flex-col space-y-2 ">
-          <div className="border p-4 text-center">26</div>
-          <div className="border p-4 text-center">27</div>
-          <div className="border p-4 text-center">28</div>
-          <div className="border p-4 text-center">29</div>
-          <div className="border p-4 text-center">30</div>
+        <div className="flex flex-col my-3 md:my-4">
+          {[26, 27, 28, 29, 30].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
         </div>
 
-        <div className="col-span-2"></div>
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
 
         {/* ستون 2 */}
-        <div className="flex flex-col space-y-2">
-          <div className="border p-4 text-center">25</div>
-          <div className="border p-4 text-center">24</div>
-          <div className="border p-4 text-center">23</div>
-          <div className="border p-4 text-center">22</div>
-          <div className="border p-4 text-center">21</div>
+        <div className="flex flex-col my-3 md:my-4">
+          {[25, 24, 23, 22, 21].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
         </div>
-
-        <div className="flex flex-col space-y-2">
-          <div className="border p-4 text-center">5</div>
-          <div className="border p-4 text-center">4</div>
-          <div className="border p-4 text-center">3</div>
-          <div className="border p-4 text-center">2</div>
-          <div className="border p-4 text-center">1</div>
-        </div>
-
-        <div className="col-span-2"></div>
 
         {/* ستون 3 */}
-        <div className="flex flex-col space-y-2">
-          <div className="border p-4 text-center">6</div>
-          <div className="border p-4 text-center">7</div>
-          <div className="border p-4 text-center">8</div>
-          <div className="border p-4 text-center">9</div>
-          <div className="border p-4 text-center">10</div>
+        <div className="flex flex-col my-3 md:my-4">
+          {[5, 4, 3, 2, 1].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
         </div>
 
-        <div className="col-span-4"></div>
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
 
         {/* ستون 4 */}
-        <div className="flex flex-col space-y-2">
-          <div className="border p-4 text-center">11</div>
-          <div className="border p-4 text-center">12</div>
-          <div className="border p-4 text-center">13</div>
-          <div className="border p-4 text-center">14</div>
-          <div className="border p-4 text-center">15</div>
+        <div className="flex flex-col my-3 md:my-4">
+          {[6, 7, 8, 9, 10].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
         </div>
 
-        <div className="col-span-2"></div>
+        <div className="max-sm:col-span-2 sm:col-span-3 md:col-span-4"></div>
 
         {/* ستون 5 */}
-        <div className="flex flex-col space-y-2">
-          <div className="border p-4 text-center">20</div>
-          <div className="border p-4 text-center">19</div>
-          <div className="border p-4 text-center">18</div>
-          <div className="border p-4 text-center">17</div>
-          <div className="border p-4 text-center">16</div>
+        <div className="flex flex-col my-3 md:my-4">
+          {[20, 19, 18, 17, 16].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
+
+        <div className="max-sm:hidden sm:col-span-1 md:col-span-2"></div>
+
+        {/* ستون 6 */}
+        <div className="flex flex-col my-3 md:my-4">
+          {[11, 12, 13, 14, 15].map((number) => (
+            <button
+              key={number}
+              className={`p-4 text-center text-dark rounded-lg bg-primary-500 m-2 ${
+                activeButtons[number - 1]
+                  ? "reverse-custom-box-shadow"
+                  : "custom-box-shadow"
+              }`}
+              onClick={() => toggleClass(number - 1)}
+            >
+              {number}
+            </button>
+          ))}
         </div>
       </div>
     </div>

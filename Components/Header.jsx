@@ -5,7 +5,7 @@ export default function Navbar() {
     <div>
       <nav
         dir="rtl"
-        className="flex flex-row justify-around items-center space-x-10"
+        className="flex flex-row justify-between items-center mx-6"
       >
         {/* 
         <picture>

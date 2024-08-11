@@ -1,5 +1,6 @@
+"use client";
 import Header from "../components/Header";
-import Pcs from "../components/Pcs";
+import Pcs from "../Components/Pcs";
 
 export default function HomePage() {
   return (

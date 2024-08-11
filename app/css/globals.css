@@ -1,5 +1,20 @@
-/* @import url("../fonts/woff/IRANSansWeb(FaNum).woff"); */
-
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  /* .gradient-to-br {
+    background: linear-gradient(145deg, #ffb41c, #e19717);
+  }
+  .reverse-gradient-to-br {
+    background: linear-gradient(145deg, #e19717, #ffb41c);
+  } */
+
+  .custom-box-shadow {
+    box-shadow: 7px 7px 14px -6px #d58f16, -7px -7px 14px -6px #ffc11e;
+  }
+  .reverse-custom-box-shadow {
+    box-shadow: inset 7px 7px 14px #d58f16, inset -7px -7px 14px #ffc11e;
+  }
+}
