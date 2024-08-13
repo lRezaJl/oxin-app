@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // گزینه‌های دقیقه
-const minutesOptions = ["00", "15", "30", "45"];
+const minutesOptions = ["", "00", "15", "30", "45"];
 
 // گزینه‌های ساعت برای انتخاب ساعت شروع
 const hourOptions = Array.from({ length: 16 }, (_, i) =>
@@ -9,10 +9,52 @@ const hourOptions = Array.from({ length: 16 }, (_, i) =>
 );
 
 const VerticalSelect = ({ options, selected, setSelected }) => {
+  const containerRef = useRef(null);
+
+  const handleWheel = (event) => {
+    // event.preventDefault(); // جلوگیری از اسکرول صفحه
+
+    const currentIndex = options.indexOf(selected);
+    if (event.deltaY < 0 && currentIndex > 0) {
+      // اسکرول به بالا
+      setSelected(options[currentIndex - 1]);
+    } else if (event.deltaY > 0 && currentIndex < options.length - 1) {
+      // اسکرول به پایین
+      setSelected(options[currentIndex + 1]);
+    }
+  };
+
+  const handleDrag = (event) => {
+    // اینجا میتوانید تابعی برای تغییر مقدار با درگ اضافه کنید
+  };
+
+  useEffect(() => {
+    const index = options.indexOf(selected);
+    const container = containerRef.current;
+    if (container) {
+      const itemHeight = container.firstChild?.offsetHeight || 0;
+      container.scrollTo({
+        top: index * itemHeight - (container.clientHeight - itemHeight) / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [selected, options]);
+
+  const getOpacity = (index) => {
+    const currentIndex = options.indexOf(selected);
+    const distance = Math.abs(currentIndex - index);
+    return 1 - distance * 0.3; // کاهش شفافیت بر اساس فاصله از آیتم انتخاب شده
+  };
+
   return (
     <div
-      className="carousel carousel-vertical rounded-box h-auto overflow-hidden border-x-2 border-blue-500
-    bg-gradient-to-t from-gray-800 via-blue-950 to-gray-800"
+      ref={containerRef}
+      className="carousel carousel-vertical rounded-box h-fit overflow-hidden border-x-2 border-blue-700 -mt-2
+      bg-gradient-to-t from-gray-800 via-blue-950 to-gray-800"
+      onWheel={handleWheel} // اضافه کردن رویداد اسکرول
+      onMouseEnter={() => (document.body.style.overflow = "hidden")} // جلوگیری از اسکرول کل صفحه
+      onMouseLeave={() => (document.body.style.overflow = "auto")} // بازگرداندن اسکرول کل صفحه
+      style={{ maxHeight: "150px" }} // محدود کردن ارتفاع به صورت دلخواه
     >
       {options.map((opt, index) => (
         <div
@@ -20,11 +62,18 @@ const VerticalSelect = ({ options, selected, setSelected }) => {
           className={`carousel-item flex justify-center items-center p-2 text-center cursor-pointer ${
             selected === opt
               ? "text-orange-500 font-bold opacity-100"
-              : "text-orange-200 opacity-50"
+              : "text-orange-200"
           }`}
-          onClick={() => setSelected(opt)}
+          style={{
+            opacity: getOpacity(index),
+            transition: "opacity 0.3s ease-in-out",
+            height: "36px",
+            pointerEvents: opt === "" ? "none" : "auto", // غیرفعال کردن کلیک روی آیتم خالی
+          }}
+          onClick={() => opt && setSelected(opt)} // فقط در صورتی تغییر مقدار که آیتم خالی نباشد
         >
-          {opt}
+          {opt || "\u00A0"}{" "}
+          {/* نمایش آیتم خالی با کاراکتر فضای غیر قابل تقسیم */}
         </div>
       ))}
     </div>
@@ -37,6 +86,7 @@ const SelectList = () => {
   const [selectedHour, setSelectedHour] = useState(""); // ساعت شروع پیش‌فرض
   const [selectedMinute, setSelectedMinute] = useState("00"); // دقیقه شروع پیش‌فرض
   const [selectedEndHour, setSelectedEndHour] = useState(""); // ساعت پایان انتخاب شده
+  const [difference, setDifference] = useState(0); // برای نگهداری مقدار اختلاف ساعت‌ها
 
   useEffect(() => {
     const date = new Date();
@@ -48,20 +98,22 @@ const SelectList = () => {
       10
     );
 
-    console.log("Current Hour:", currentHour);
-
     const filteredHours = hourOptions.filter(
       (hour) => parseInt(hour, 10) >= currentHour
     );
-    console.log("Filtered Hours:", filteredHours);
 
     // حذف اولین ساعت از لیست فیلتر شده برای نمایش در قسمت انتخاب دوم
     const selectableHours = filteredHours.slice(1);
 
     setFilteredHourOptions(filteredHours);
     setSelectableHours(selectableHours);
-    setSelectedHour(filteredHours[0] || ""); // اولین گزینه موجود بعد از فیلتر به عنوان گزینه انتخاب شده تنظیم می‌شود
-    setSelectedEndHour(selectableHours[0] || ""); // اولین گزینه برای ساعت پایان انتخاب شود
+
+    // تنظیم مقادیر وسطی به عنوان انتخاب پیش‌فرض
+    const middleIndexStart = Math.floor(filteredHours.length / 2);
+    const middleIndexEnd = Math.floor(selectableHours.length / 2);
+
+    setSelectedHour(filteredHours[middleIndexStart] || ""); // مقدار وسطی برای ساعت شروع
+    setSelectedEndHour(selectableHours[middleIndexEnd] || ""); // مقدار وسطی برای ساعت پایان
   }, []);
 
   useEffect(() => {
@@ -79,6 +131,22 @@ const SelectList = () => {
     }
   }, [selectedHour]);
 
+  useEffect(() => {
+    if (selectedHour && selectedMinute && selectedEndHour) {
+      // تبدیل ساعات به عدد و محاسبه اختلاف
+      const startHour = parseInt(selectedHour, 10);
+      const endHour = parseInt(selectedEndHour, 10);
+      const diff =
+        endHour >= startHour ? endHour - startHour : 24 - startHour + endHour;
+
+      setDifference(diff); // به‌روزرسانی مقدار difference در state
+
+      console.log(
+        `شروع از ساعت ${selectedHour}:${selectedMinute} تا ساعت ${selectedEndHour}:${selectedMinute} (${diff} ساعت)`
+      );
+    }
+  }, [selectedHour, selectedMinute, selectedEndHour]);
+
   // برای تنظیم دقیقه در قسمت پایان
   const handleMinuteChange = (minute) => {
     setSelectedMinute(minute);
@@ -90,15 +158,15 @@ const SelectList = () => {
   };
 
   return (
-    <div dir="rtl" className="flex flex-row justify-center items-start gap-4">
-      <div className="flex flex-row">
+    <div dir="rtl" className="flex flex-row justify-center items-center gap-4">
+      <div className="flex flex-row justify-center items-center">
         <h3 className="text-center mb-2 mx-1">شروع از ساعت</h3>
         <VerticalSelect
           options={minutesOptions}
           selected={selectedMinute}
           setSelected={handleMinuteChange}
         />
-        <h3 className="text-center mt-4 mx-1">:</h3>
+        <h3 className="text-center mx-1">:</h3>
         <VerticalSelect
           options={filteredHourOptions}
           selected={selectedHour}
@@ -106,15 +174,16 @@ const SelectList = () => {
         />
       </div>
 
-      <div className="flex flex-row">
-        <h3 className="text-center mb-2 mx-1">تا ساعت</h3>
+      <div className="flex flex-row justify-center items-center">
+        <h3 className="text-center mx-1">تا ساعت</h3>
         <p className="text-orange-500 font-bold">{selectedMinute}</p>
-        <h3 className="text-center mt-4 mx-1">:</h3>
+        <h3 className="text-center mx-1">:</h3>
         <VerticalSelect
           options={selectableHours}
           selected={selectedEndHour}
           setSelected={handleEndHourChange}
         />
+        <p className="text-orange-500 font-bold mr-3">({difference} ساعت)</p>
       </div>
     </div>
   );
