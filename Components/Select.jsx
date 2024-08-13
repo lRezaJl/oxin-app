@@ -12,15 +12,20 @@ const VerticalSelect = ({ options, selected, setSelected }) => {
   const containerRef = useRef(null);
 
   const handleWheel = (event) => {
-    // event.preventDefault(); // جلوگیری از اسکرول صفحه
-
     const currentIndex = options.indexOf(selected);
+    let newIndex = currentIndex;
+
     if (event.deltaY < 0 && currentIndex > 0) {
       // اسکرول به بالا
-      setSelected(options[currentIndex - 1]);
+      newIndex = currentIndex - 1;
     } else if (event.deltaY > 0 && currentIndex < options.length - 1) {
       // اسکرول به پایین
-      setSelected(options[currentIndex + 1]);
+      newIndex = currentIndex + 1;
+    }
+
+    // جلوگیری از انتخاب گزینه خالی
+    if (options[newIndex] !== "") {
+      setSelected(options[newIndex]);
     }
   };
 
