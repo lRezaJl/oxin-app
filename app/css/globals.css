@@ -17,4 +17,10 @@
   .reverse-custom-box-shadow {
     box-shadow: inset 7px 7px 14px #d58f16, inset -7px -7px 14px #ffc11e;
   }
+  .no-select {
+    -webkit-user-select: none; /* برای مرورگرهای وب‌کیت مثل سافاری */
+    -moz-user-select: none; /* برای فایرفاکس */
+    -ms-user-select: none; /* برای اینترنت اکسپلورر/اج */
+    user-select: none; /* برای سایر مرورگرها */
+  }
 }
