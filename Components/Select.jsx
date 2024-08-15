@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { utils } from "react-modern-calendar-datepicker";
 
 // گزینه‌های دقیقه
 const minutesOptions = ["", "00", "15", "30", "45"];
@@ -119,13 +120,23 @@ const VerticalSelect = ({
   );
 };
 
-const SelectList = () => {
+const SelectList = ({ selectedDay }) => {
   const [filteredHourOptions, setFilteredHourOptions] = useState([]);
   const [selectableHours, setSelectableHours] = useState([]);
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [selectedEndHour, setSelectedEndHour] = useState("");
   const [difference, setDifference] = useState(0);
+
+  // محاسبه تاریخ امروز
+  const today = utils("fa").getToday();
+
+  useEffect(() => {
+    if (selectedDay) {
+      console.log("Selected day from calendar:", selectedDay);
+      // Add logic based on the selectedDay if necessary
+    }
+  }, [selectedDay]);
 
   useEffect(() => {
     const date = new Date();
@@ -139,9 +150,19 @@ const SelectList = () => {
       (hour) => parseInt(hour, 10) >= currentHour
     );
 
-    const selectableHours = filteredHours.slice(1);
+    // شرط: اگر تاریخ انتخاب شده برابر با امروز باشد، فیلترشده را نمایش دهد
+    if (
+      selectedDay &&
+      selectedDay.day === today.day &&
+      selectedDay.month === today.month &&
+      selectedDay.year === today.year
+    ) {
+      setFilteredHourOptions(filteredHours);
+    } else {
+      setFilteredHourOptions(hourOptions); // در غیر این صورت همه ساعات را نمایش دهد
+    }
 
-    setFilteredHourOptions(filteredHours);
+    const selectableHours = filteredHours.slice(1);
     setSelectableHours(selectableHours);
 
     const middleIndexStart = Math.floor(filteredHours.length / 2);
@@ -149,7 +170,7 @@ const SelectList = () => {
 
     setSelectedHour(filteredHours[middleIndexStart] || "");
     setSelectedEndHour(selectableHours[middleIndexEnd] || "");
-  }, []);
+  }, [selectedDay]);
 
   useEffect(() => {
     if (selectedHour === "23") {
@@ -207,7 +228,7 @@ const SelectList = () => {
           selected={selectedHour}
           setSelected={setSelectedHour}
           selectedHour={selectedHour}
-          isLeftColumn={false} // این ستون سمت چپ است
+          isLeftColumn={false}
         />
       </div>
 
@@ -220,7 +241,7 @@ const SelectList = () => {
           selected={selectedEndHour}
           setSelected={handleEndHourChange}
           selectedHour={selectedHour}
-          isLeftColumn={true} // این ستون سمت راست است
+          isLeftColumn={true}
         />
         <p className="text-orange-500 font-bold mr-3">({difference} ساعت)</p>
       </div>
