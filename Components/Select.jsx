@@ -132,35 +132,26 @@ const SelectList = ({ selectedDay }) => {
   const today = utils("fa").getToday();
 
   useEffect(() => {
-    if (selectedDay) {
-      console.log("Selected day from calendar:", selectedDay);
-      // Add logic based on the selectedDay if necessary
-    }
-  }, [selectedDay]);
-
-  useEffect(() => {
     const date = new Date();
-    const options = { hour: "2-digit", hour12: false, timeZone: "Asia/Tehran" };
-    const currentHour = parseInt(
-      new Intl.DateTimeFormat("en-US", options).format(date),
-      10
-    );
+    const currentHour = parseInt(date.getHours(), 10);
 
-    const filteredHours = hourOptions.filter(
-      (hour) => parseInt(hour, 10) >= currentHour
-    );
+    let filteredHours;
 
-    // شرط: اگر تاریخ انتخاب شده برابر با امروز باشد، فیلترشده را نمایش دهد
     if (
       selectedDay &&
       selectedDay.day === today.day &&
       selectedDay.month === today.month &&
       selectedDay.year === today.year
     ) {
-      setFilteredHourOptions(filteredHours);
+      // اگر تاریخ انتخاب‌شده امروز بود، فقط ساعت‌های آینده را نمایش دهید
+      filteredHours = hourOptions.filter(
+        (hour) => parseInt(hour, 10) >= currentHour
+      );
     } else {
-      setFilteredHourOptions(hourOptions); // در غیر این صورت همه ساعات را نمایش دهد
+      // اگر تاریخ انتخاب‌شده غیر از امروز بود، همه ساعات را نمایش دهید
+      filteredHours = hourOptions;
     }
+    setFilteredHourOptions(filteredHours);
 
     const selectableHours = filteredHours.slice(1);
     setSelectableHours(selectableHours);

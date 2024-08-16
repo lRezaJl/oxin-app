@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
 
-dayjs.extend(jalaliday); // اضافه کردن پشتیبانی از تقویم شمسی
+dayjs.extend(jalaliday);
 
-const PersianCalendar = () => {
-  const today = dayjs().calendar("jalali"); // تنظیم تقویم به شمسی
+const PersianCalendar = ({ selectedDay, setSelectedDay }) => {
+  const today = dayjs().calendar("jalali");
 
-  // تبدیل روزهای هفته به فارسی
   const daysOfWeek = [
     "یکشنبه",
     "دوشنبه",
@@ -18,21 +17,64 @@ const PersianCalendar = () => {
     "شنبه",
   ];
 
-  // محاسبه 60 روز آینده
   const dates = Array.from({ length: 60 }, (_, i) => {
     const date = today.add(i, "day");
     return {
       id: i + 1,
-      date: date.format("MM/DD"), // فرمت ماه/روز
-      day: daysOfWeek[date.day()], // روز هفته به فارسی
+      date: date.format("MM/DD"),
+      day: daysOfWeek[date.day()],
+      fullDate: {
+        year: date.year(),
+        month: date.month() + 1,
+        day: date.date(),
+      },
     };
   });
 
-  const [startIndex, setStartIndex] = useState(0); // شاخص شروع برای نمایش تاریخ‌ها
-  const [visibleCount, setVisibleCount] = useState(7); // تعداد روزهای قابل نمایش
-  const [selectedDateId, setSelectedDateId] = useState(today.date()); // تنظیم تاریخ امروز به عنوان انتخاب شده
+  const [startIndex, setStartIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(7);
+  const [selectedDateId, setSelectedDateId] = useState(null);
 
-  // تابع برای تنظیم تعداد روزهای قابل نمایش بر اساس اندازه صفحه
+  useEffect(() => {
+    console.log("Component mounted");
+
+    if (typeof window !== "undefined") {
+      console.log("Window is defined");
+
+      const updateVisibleCount = () => {
+        const width = window.innerWidth;
+        console.log("Window width:", width);
+
+        if (width < 640) setVisibleCount(2);
+        else if (width < 768) setVisibleCount(3);
+        else if (width < 1024) setVisibleCount(5);
+        else setVisibleCount(7);
+      };
+
+      updateVisibleCount();
+      window.addEventListener("resize", updateVisibleCount);
+
+      return () => {
+        console.log("Cleaning up event listener");
+        window.removeEventListener("resize", updateVisibleCount);
+      };
+    } else {
+      console.log("Window is not defined");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedDay) {
+      const selectedDate = dates.find(
+        (d) =>
+          d.fullDate.year === selectedDay.year &&
+          d.fullDate.month === selectedDay.month &&
+          d.fullDate.day === selectedDay.day
+      );
+      setSelectedDateId(selectedDate ? selectedDate.id : null);
+    }
+  }, [selectedDay]);
+
   const updateVisibleCount = () => {
     const width = window.innerWidth;
 
@@ -42,30 +84,22 @@ const PersianCalendar = () => {
     else setVisibleCount(7);
   };
 
-  useEffect(() => {
-    updateVisibleCount(); // تنظیم تعداد روزهای قابل نمایش در بار اول
-    window.addEventListener("resize", updateVisibleCount); // به‌روزرسانی تعداد روزهای قابل نمایش در هنگام تغییر اندازه صفحه
-
-    return () => {
-      window.removeEventListener("resize", updateVisibleCount);
-    };
-  }, []);
-
   const handlePrev = () => {
-    setStartIndex((prev) => Math.max(prev - visibleCount, 0)); // حرکت به عقب و جلوگیری از رفتن به زیر 0
+    setStartIndex((prev) => Math.max(prev - visibleCount, 0));
   };
 
   const handleNext = () => {
     setStartIndex((prev) =>
       Math.min(prev + visibleCount, dates.length - visibleCount)
-    ); // حرکت به جلو و جلوگیری از عبور از تعداد کل تاریخ‌ها
+    );
   };
 
   const handleDateSelect = (id) => {
-    setSelectedDateId(id); // تنظیم تاریخ انتخاب شده
+    setSelectedDateId(id);
+    setSelectedDay(dates[id - 1].fullDate); // ارسال تاریخ انتخاب شده به بالا
   };
 
-  const visibleDates = dates.slice(startIndex, startIndex + visibleCount); // دریافت روزها برای نمایش
+  const visibleDates = dates.slice(startIndex, startIndex + visibleCount);
 
   return (
     <div
