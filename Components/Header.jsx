@@ -1,22 +1,19 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
+  const router = useRouter();
+
+  const handleButtonClick = () => {
+    router.push("/account");
+  };
+
   return (
     <div>
       <nav
         dir="rtl"
         className="flex flex-row justify-between items-center mx-6"
       >
-        {/* 
-        <picture>
-          <source
-            srcSet="/images/oxinLogo180x127.png"
-            media="(min-width: 800px)"
-          />
-          <img src="/images/oxinLogo128x90.png" alt="Oxin Game" />
-        </picture> 
-        */}
-
         <Image
           className="max-md:w-[128px] max-lg:w-[150px] max-xl:w-[168px]"
           src="/images/oxinLogo180x127.png"
@@ -25,7 +22,10 @@ export default function Navbar() {
           height={127}
         />
 
-        <button className="btn ring-2 ring-primary-500 bg-transparent font-semibold text-lg">
+        <button
+          onClick={handleButtonClick}
+          className="btn ring-2 ring-primary-500 bg-transparent font-semibold text-lg"
+        >
           حساب کاربری
         </button>
       </nav>
