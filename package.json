@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amir04lm26/react-modern-calendar-date-picker": "^1.0.1",
     "dayjs": "^1.11.12",
     "dayjs-jalali": "^0.0.2",
     "jalaliday": "^2.3.0",
@@ -17,7 +18,6 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18",
-    "react-modern-calendar-datepicker": "^3.1.6",
     "react-scroll": "^1.9.0",
     "v-calendar": "^2.4.2"
   },

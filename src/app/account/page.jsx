@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
 
-export default function user() {
+export default function Account() {
   return <div>user</div>;
 }

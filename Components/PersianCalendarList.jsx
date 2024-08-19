@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
