@@ -1,13 +1,8 @@
+"use client";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Navbar() {
-  const router = useRouter();
-
-  const handleButtonClick = () => {
-    router.push("/account");
-  };
-
   return (
     <div>
       <nav
@@ -22,12 +17,12 @@ export default function Navbar() {
           height={127}
         />
 
-        <button
-          onClick={handleButtonClick}
+        <Link
+          href="/account"
           className="btn ring-2 ring-primary-500 bg-transparent font-semibold text-lg"
         >
           حساب کاربری
-        </button>
+        </Link>
       </nav>
     </div>
   );

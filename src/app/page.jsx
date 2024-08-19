@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Pcs from "../Components/Pcs";
-import Day from "../Components/Day";
-import Select from "../Components/Select";
-import PersianCalendarList from "../Components/PersianCalendarList";
+import Header from "../../components/Header";
+import Pcs from "../../Components/Pcs";
+import Day from "../../Components/Day";
+import Select from "../../Components/Select";
+import PersianCalendarList from "../../Components/PersianCalendarList";
 import { utils } from "react-modern-calendar-datepicker";
 
 export default function HomePage() {

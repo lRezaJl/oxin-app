@@ -36,31 +36,25 @@ const PersianCalendar = ({ selectedDay, setSelectedDay }) => {
   const [selectedDateId, setSelectedDateId] = useState(null);
 
   useEffect(() => {
-    console.log("Component mounted");
+    const updateVisibleCount = () => {
+      const width = window.innerWidth;
 
-    if (typeof window !== "undefined") {
-      console.log("Window is defined");
+      if (width < 640) setVisibleCount(2);
+      else if (width < 768) setVisibleCount(3);
+      else if (width < 1024) setVisibleCount(5);
+      else setVisibleCount(7);
+    };
 
-      const updateVisibleCount = () => {
-        const width = window.innerWidth;
-        console.log("Window width:", width);
+    // Call the function to set initial state
+    updateVisibleCount();
 
-        if (width < 640) setVisibleCount(2);
-        else if (width < 768) setVisibleCount(3);
-        else if (width < 1024) setVisibleCount(5);
-        else setVisibleCount(7);
-      };
+    // Add event listener
+    window.addEventListener("resize", updateVisibleCount);
 
-      updateVisibleCount();
-      window.addEventListener("resize", updateVisibleCount);
-
-      return () => {
-        console.log("Cleaning up event listener");
-        window.removeEventListener("resize", updateVisibleCount);
-      };
-    } else {
-      console.log("Window is not defined");
-    }
+    // Cleanup function to remove the event listener
+    return () => {
+      window.removeEventListener("resize", updateVisibleCount);
+    };
   }, []);
 
   useEffect(() => {
@@ -74,15 +68,6 @@ const PersianCalendar = ({ selectedDay, setSelectedDay }) => {
       setSelectedDateId(selectedDate ? selectedDate.id : null);
     }
   }, [selectedDay]);
-
-  const updateVisibleCount = () => {
-    const width = window.innerWidth;
-
-    if (width < 640) setVisibleCount(2);
-    else if (width < 768) setVisibleCount(3);
-    else if (width < 1024) setVisibleCount(5);
-    else setVisibleCount(7);
-  };
 
   const handlePrev = () => {
     setStartIndex((prev) => Math.max(prev - visibleCount, 0));
