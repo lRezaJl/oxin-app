@@ -16,8 +16,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
-      <Header />
+    <div className="">
+      <div className="">
+        <Header />
+      </div>
       <div className="flex items-center justify-center">
         <PersianCalendar
           selectedDay={selectedDay}
