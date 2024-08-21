@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card {
+  @apply w-full h-screen rounded-box bg-gray-800 flex flex-row gap-1.5 p-1;
+}
+
+.card-item {
+  @apply flex-1 h-full overflow-hidden cursor-pointer rounded-box transition-all duration-500 bg-gray-800 border border-pink-500 flex justify-center items-center focus:flex-[4];
+}
+
+.card-text {
+  @apply min-w-[14em] p-2 text-center transform -rotate-90 transition-all duration-500 uppercase text-pink-400 tracking-widest hover:rotate-0;
+}

@@ -17,8 +17,10 @@ export default function HomePage() {
 
   return (
     <div className="">
-      <div className="">
-        <Header />
+      <div className="fixed z-50 w-full">
+        <div className="m-4">
+          <Header />
+        </div>
       </div>
       <div className="flex items-center justify-center">
         <PersianCalendar
