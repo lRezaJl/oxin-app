@@ -33,7 +33,7 @@ module.exports = {
       },
       dropShadow: {
         "3xlRed": "0 2px 4px rgb(255, 87, 51, 0.2)",
-        "3xlgray": "0 2px 4px rgb(209, 213, 219, 0.2)",
+        "3xlGray": "0 2px 4px rgb(209, 213, 219, 0.2)",
       },
     },
   },
