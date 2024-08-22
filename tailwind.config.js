@@ -28,6 +28,13 @@ module.exports = {
         brightBlue: "#0073E6",
         goldenYellow: "#FFD700",
       },
+      boxShadow: {
+        navbox: "4px 4px 32px #b2b5ba, -4px -4px 32px #f0f5fc",
+      },
+      dropShadow: {
+        "3xlRed": "0 2px 4px rgb(255, 87, 51, 0.2)",
+        "3xlgray": "0 2px 4px rgb(209, 213, 219, 0.2)",
+      },
     },
   },
   plugins: [require("daisyui")],
