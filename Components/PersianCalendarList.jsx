@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import jalaliday from "jalaliday";
@@ -106,7 +106,7 @@ const PersianCalendar = ({ selectedDay, setSelectedDay }) => {
             key={item.id}
             className={`join-item btn text-center p-2 border rounded-lg min-w-[100px] ${
               item.id === selectedDateId
-                ? "bg-primary-400 text-dark/90 hover:bg-primary-500"
+                ? "bg-primary-400 text-dark/90 hover:bg-primary-400"
                 : "bg-dark/95"
             }`}
             onClick={() => handleDateSelect(item.id)}

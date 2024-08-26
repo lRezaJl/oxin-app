@@ -1,6 +1,6 @@
 "use client";
 import Test from "../../../Components/test";
-import Test2 from "../../../Components/test2";
+import Test2 from "../../../Components/Account";
 
 export default function Account() {
   return (

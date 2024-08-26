@@ -8,11 +8,11 @@ import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 export default function Navbar() {
   return (
-    <div className="">
+    <div id="navbar" className="">
       <div className="">
         <div
           dir="rtl"
-          className="flex navbar bg-base-100/75 backdrop-saturate-150 backdrop-blur-lg border border-slate-300 shadow-lg shadow-primary-800/20 rounded-box"
+          className="flex navbar bg-base-100/75 backdrop-saturate-150 backdrop-blur-lg border border-slate-300 shadow-lg shadow-primary-700/20 rounded-box"
         >
           <div className="flex-1 mr-2">
             <Image

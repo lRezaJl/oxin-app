@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.details-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+details[open] .details-content {
+  max-height: 1000px; /* مقدار دلخواه بسته به ارتفاع محتوای شما */
+  opacity: 1;
+}
+
 @layer utilities {
   /* .gradient-to-br {
     background: linear-gradient(145deg, #ffb41c, #e19717);

@@ -9,19 +9,46 @@ import { utils } from "@amir04lm26/react-modern-calendar-date-picker";
 
 export default function HomePage() {
   const [selectedDay, setSelectedDay] = useState(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
     const today = utils("fa").getToday();
     setSelectedDay(today); // تنظیم تاریخ امروز به عنوان تاریخ انتخاب شده
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
     <div className="">
-      <div className="fixed z-50 w-full">
+      <div
+        className={`fixed z-50 w-full transform transition-transform duration-150 ease-in-out ${
+          showHeader ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
         <div className="m-4">
           <Header />
         </div>
       </div>
+
       <div className="flex items-center justify-center">
         <PersianCalendar
           selectedDay={selectedDay}
@@ -47,7 +74,7 @@ export default function HomePage() {
               />
             </label>
           </div>
-          <button className="btn w-80 mx-auto text-lg bg-primary-400 hover:bg-primary-500 text-darkCharcoal border-slate-300 hover:border-slate-500">
+          <button className="btn w-80 mx-auto text-lg bg-primary-400 hover:bg-primary-400 text-darkCharcoal border-slate-300 hover:border-slate-500">
             ثبت رزرو
           </button>
         </div>
