@@ -30,7 +30,7 @@ const Card = () => {
       <div
         className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${
           focusedCard.includes(1)
-            ? "flex-[0.5] max-sm:flex-[18] max-md:flex-[2] max-lg:flex-[1] max-xl:flex-[0.75]"
+            ? "flex-[0.5] max-sm:flex-[14] max-md:flex-[2] max-lg:flex-[1] max-xl:flex-[0.75]"
             : "transition-all duration-500 cursor-pointer"
         }`}
         onClick={() => handleFocus(1)}
@@ -104,7 +104,7 @@ const Card = () => {
       <div
         className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5  ${
           focusedCard.includes(2)
-            ? "max-sm:flex-[12] sm:flex-[2] xl:flex-[3]"
+            ? "max-sm:flex-[14] sm:flex-[2] xl:flex-[3]"
             : "transition-all duration-500 cursor-pointer"
         }`}
         onClick={() => handleFocus(2)}
@@ -113,7 +113,7 @@ const Card = () => {
           className={`absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
             focusedCard.includes(2)
               ? "rotate-0 top-0 "
-              : "w-full h-full backdrop-blur-sm backdrop-saturate-150 drop-shadow-hardDark cursor-pointer"
+              : "w-full h-full backdrop-blur-lg backdrop-saturate-150 drop-shadow-hardDark cursor-pointer"
           }`}
           onClick={() => handleFocus(2)}
         >
@@ -128,7 +128,7 @@ const Card = () => {
           </span>
         </div>
 
-        <div className="p-2 mt-16 w-full">
+        <div className="p-5 mt-16 w-full">
           <ReserveList />
         </div>
       </div>
