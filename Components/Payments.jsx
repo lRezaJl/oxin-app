@@ -2,12 +2,12 @@
 import React from "react";
 import { FaAngleDown } from "react-icons/fa6";
 
-export default function Reserve() {
+export default function Payments() {
   return (
     <div dir="rtl" className="flex flex-col justify-start items-start">
       <div className=" w-full flex flex-col justify-start items-start">
         <p className="text-primary-400 text-3xl font-bold indent-5 marker:text-primary-300">
-          &#8226; رزرو های آینده
+          &#8226; تاریخچه رزرو
         </p>
         <details className="w-full mt-4 space-y-3 group bg-gray-700 card pt-2 pb-5 border border-gray-600">
           <summary className="text-xl font-medium flex flex-row text-primary-400 justify-start items-center mx-4 ml-5 cursor-pointer py-3">
@@ -28,6 +28,7 @@ export default function Reserve() {
               <span className="text-primary-400">17</span>
               <p className="text-gray-50"> - (ساعت 4)</p>
             </div>
+            <p className="text-gray-50">تومان 123,412</p>
           </div>
         </details>
         <details className="w-full mt-4 space-y-3 group bg-gray-700 card pt-2 pb-5 border border-gray-600">
@@ -49,6 +50,7 @@ export default function Reserve() {
               <span className="text-primary-400">17</span>
               <p className="text-gray-50"> - (ساعت 4)</p>
             </div>
+            <p className="text-gray-50">تومان 123,324 </p>
           </div>
         </details>
       </div>

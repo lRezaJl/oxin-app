@@ -1,26 +1,47 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
 import Image from "next/image";
 import ReserveList from "../Components/ReserveList";
+import Payments from "../Components/Payments";
 
 import { CiEdit } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa6";
 import { SiCashapp } from "react-icons/si";
-import { TbReservedLine } from "react-icons/tb";
 import { FaClipboardList } from "react-icons/fa";
 
 const Card = () => {
-  // تنظیم state برای مدیریت فوکوس دکمه‌ها
-  const [focusedCard, setFocusedCard] = useState([2, 3]); // کارت‌های دوم و سوم در ابتدا فعال هستند
+  const [focusedCard, setFocusedCard] = useState([2, 3]);
+  const [router, setRouter] = useState(null);
+  const [activeComponent, setActiveComponent] = useState("ReserveList");
 
-  // تابعی برای تغییر فوکوس کارت‌ها
+  const handleComponentChange = (ReserveList) => {
+    setActiveComponent(ReserveList);
+  };
+
   const handleFocus = (cardIndex) => {
     if (cardIndex === 1) {
-      setFocusedCard([1]); // اگر روی کارت اول کلیک شود، فقط کارت اول فعال می‌شود
+      setFocusedCard([1]);
     } else {
-      setFocusedCard([2]); // در غیر این صورت، کارت‌های دوم و سوم فعال می‌مانند
+      setFocusedCard([2]);
     }
   };
+
+  const navigateTo = (path) => {
+    if (router) {
+      router.push(path); // فقط وقتی router تعریف شده باشد استفاده می‌شود
+    }
+  };
+
+  function LogOut() {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    // Redirect to the login page or any other page
+    window.location.href = "/home";
+  }
 
   return (
     <div
@@ -81,19 +102,31 @@ const Card = () => {
             </button>
           </div>
           <nav className="flex flex-col justify-center items-start gap-10 my-10 lg:mr-14">
-            <button className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700">
+            <Link
+              href="/"
+              className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700"
+            >
               <IoHome className="text-4xl font-bold" />
               <p className="text-4xl font-bold tracking-wide">خانه</p>
-            </button>
-            <button className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700">
+            </Link>
+            <button
+              onClick={() => handleComponentChange("ReserveList")}
+              className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700"
+            >
               <FaClipboardList className="text-4xl font-bold" />
               <p className="text-4xl font-bold tracking-wide ">رزرو ها</p>
             </button>
-            <button className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700">
+            <button
+              onClick={() => handleComponentChange("Payments")}
+              className="btn bg-transparent border-none shadow-none hover:bg-gray-300 drop-shadow-3xlGray hover:shadow-navbox flex-nowrap flex flex-row justify-start items-start gap-5 text-gray-700"
+            >
               <SiCashapp className="text-4xl font-bold" />
               <p className="text-4xl font-bold tracking-wide">پرداخت</p>
             </button>
-            <button className="btn bg-transparent border-none shadow-none drop-shadow-3xlRed hover:bg-gray-300 hover:shadow-navbox  flex-nowrap flex flex-row justify-start items-start gap-5 text-coralRed">
+            <button
+              className="btn bg-transparent border-none shadow-none drop-shadow-3xlRed hover:bg-gray-300 hover:shadow-navbox  flex-nowrap flex flex-row justify-start items-start gap-5 text-coralRed"
+              onClick={() => LogOut()} // Navigate to the logout page
+            >
               <FaPowerOff className="text-4xl font-bold" />
               <p className="text-4xl font-bold tracking-wide">خروج</p>
             </button>
@@ -124,12 +157,14 @@ const Card = () => {
                 : "-rotate-90 top-[50%] cursor-pointer"
             }`}
           >
-            رزرو هـا
+            {activeComponent === "ReserveList" && "رزرو ها"}
+            {activeComponent === "Payments" && "پرداخت ها"}
           </span>
         </div>
 
         <div className="p-5 mt-16 w-full">
-          <ReserveList />
+          {activeComponent === "ReserveList" && <ReserveList />}
+          {activeComponent === "Payments" && <Payments />}
         </div>
       </div>
     </div>
