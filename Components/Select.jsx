@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { utils } from "@amir04lm26/react-modern-calendar-date-picker";
 
 // گزینه‌های دقیقه
-const minutesOptions = ["", "00", "15", "30", "45"];
+const minutesOptions = ["", "00", "15", "30", "45", ""];
 
 // گزینه‌های ساعت برای انتخاب ساعت شروع
 const hourOptions = Array.from({ length: 16 }, (_, i) =>
@@ -46,7 +46,6 @@ const VerticalSelect = ({
 
     const deltaY = startY.current - event.clientY;
     if (Math.abs(deltaY) > 10) {
-      // تنظیم حساسیت درگ
       handleWheel({ deltaY });
       startY.current = event.clientY;
     }
@@ -80,7 +79,7 @@ const VerticalSelect = ({
       ref={containerRef}
       className={`carousel carousel-vertical rounded-box h-fit overflow-hidden
       ${
-        isLeftColumn && (selectedHour === "22" || selectedHour === "23")
+        isLeftColumn && selectedHour === "23"
           ? ""
           : "border-x-2 border-blue-700 bg-gradient-to-t from-gray-800 via-blue-950 to-gray-800"
       }`}
@@ -95,11 +94,7 @@ const VerticalSelect = ({
         <div
           key={index}
           className={`carousel-item flex justify-center items-center text-center cursor-pointer
-            ${
-              isLeftColumn && (selectedHour === "22" || selectedHour === "23")
-                ? ""
-                : "p-2"
-            }
+            ${isLeftColumn && selectedHour === "23" ? "" : "p-2"}
             ${
               selected === opt
                 ? "text-orange-500 font-bold opacity-100"
@@ -151,9 +146,12 @@ const SelectList = ({ selectedDay }) => {
       // اگر تاریخ انتخاب‌شده غیر از امروز بود، همه ساعات را نمایش دهید
       filteredHours = hourOptions;
     }
+
+    // افزودن آپشن‌های خالی به ابتدا و انتهای `filteredHourOptions`
+    filteredHours = ["", ...filteredHours, ""];
     setFilteredHourOptions(filteredHours);
 
-    const selectableHours = filteredHours.slice(1);
+    const selectableHours = filteredHours.slice(1, -1);
     setSelectableHours(selectableHours);
 
     const middleIndexStart = Math.floor(filteredHours.length / 2);
@@ -164,14 +162,20 @@ const SelectList = ({ selectedDay }) => {
   }, [selectedDay]);
 
   useEffect(() => {
-    if (selectedHour === "23") {
-      setSelectableHours(["00"]);
+    if (selectedHour === "22") {
+      setSelectableHours(["", "23", "00", ""]);
+      setSelectedEndHour("23");
+    } else if (selectedHour === "23") {
+      setSelectableHours(["", "00", ""]);
+      setSelectedMinute("00"); // دقیقه به صورت خودکار به "00" تغییر داده می‌شود
       setSelectedEndHour("00");
     } else {
       const newSelectableHours = hourOptions.filter(
         (hour) => parseInt(hour, 10) > parseInt(selectedHour, 10)
       );
-      setSelectableHours(newSelectableHours);
+
+      // افزودن آپشن‌های خالی به ابتدا و انتهای `selectableHours`
+      setSelectableHours(["", ...newSelectableHours, ""]);
       setSelectedEndHour(newSelectableHours[0] || "");
     }
   }, [selectedHour]);
@@ -192,7 +196,9 @@ const SelectList = ({ selectedDay }) => {
   }, [selectedHour, selectedMinute, selectedEndHour]);
 
   const handleMinuteChange = (minute) => {
-    setSelectedMinute(minute);
+    if (selectedHour !== "23") {
+      setSelectedMinute(minute);
+    }
   };
 
   const handleEndHourChange = (hour) => {
