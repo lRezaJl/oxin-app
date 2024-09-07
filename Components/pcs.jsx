@@ -35,7 +35,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex justify-center items-center min-h-screen bg-slate-200">
         <div className="grid max-sm:grid-cols-4 max-md:grid-cols-6 grid-cols-6 gap-15 md:gap-4">
           <div className="flex flex-col my-3 md:my-4">
@@ -54,6 +54,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
@@ -84,6 +92,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
@@ -112,6 +128,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
@@ -142,6 +166,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
@@ -172,6 +204,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
@@ -202,6 +242,14 @@ export default function Home() {
                     : "custom-box-shadow"
                 }`}
                 onClick={() => toggleClass(number - 1)}
+                title={
+                  reservedButtons.includes(number)
+                    ? "!قبلا رزرو شده"
+                    : temporaryReservedButtons.includes(number)
+                    ? "درحال تکمیل فراید رزرو"
+                    : "!روش زده فیـری"
+                }
+                data-twe-toggle="tooltip"
               >
                 {reservedButtons.includes(number) ? (
                   "رزرو"
