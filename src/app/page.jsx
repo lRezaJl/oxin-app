@@ -38,7 +38,7 @@ export default function HomePage() {
   }, [lastScrollY]);
 
   return (
-    <div className="">
+    <div className="container m-auto">
       <div
         className={`fixed z-50 w-full transform transition-transform duration-150 ease-in-out ${
           showHeader ? "translate-y-0" : "-translate-y-full"
