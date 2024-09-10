@@ -5,6 +5,7 @@ import Pcs from "../../components/Pcs";
 import Day from "../../components/Day";
 import Select from "../../components/Select";
 import PersianCalendar from "../../Components/PersianCalendarList";
+import BorderBeam from "../../Components/BorderBeam";
 import { utils } from "@amir04lm26/react-modern-calendar-date-picker";
 
 export default function HomePage() {
@@ -39,44 +40,53 @@ export default function HomePage() {
 
   return (
     <div className="container m-auto">
-      <div
-        className={`fixed z-50 w-full transform transition-transform duration-150 ease-in-out ${
-          showHeader ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <div className="m-4">
-          <Header />
-        </div>
-      </div>
-
-      <div className="flex items-center justify-center">
-        <PersianCalendar
-          selectedDay={selectedDay}
-          setSelectedDay={setSelectedDay}
-        />
-      </div>
-      <div className="flex flex-col gap-8 justify-center items-center mt-24 my-10">
-        <Day selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
-        <Select selectedDay={selectedDay} />
-      </div>
-      <div className="my-10">
-        <Pcs />
-        <div dir="rtl" className="w-full flex flex-col gap-3 bg-slate-200">
-          <div>
-            <label className="form-control m-auto w-full max-w-xs">
-              <div className="label">
-                <span className="label-text-alt text-slate-500">کد ملی</span>
-              </div>
-              <input
-                type="text"
-                placeholder="1234567890"
-                className="input input-bordered border-2 border-slate-600 text-darkCharcoal w-full max-w-xs bg-transparent"
-              />
-            </label>
+      <div className="mx-5">
+        <div
+          className={`sticky top-0 z-50 w-full transform transition-transform duration-150 ease-in-out ${
+            showHeader ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
+          <div className="my-4">
+            <Header />
           </div>
-          <button className="btn w-80 mx-auto text-lg bg-primary-400 hover:bg-primary-400 text-darkCharcoal border-slate-300 hover:border-slate-500">
-            ثبت رزرو
-          </button>
+        </div>
+
+        <div className="relative flex flex-col gap-8 justify-center items-center mt-24 my-10">
+          <Day selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+          <Select selectedDay={selectedDay} />
+          <div className="absolute">
+            <BorderBeam />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <PersianCalendar
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
+          />
+        </div>
+        <div className="flex flex-col my-5">
+          <Pcs />
+          <div
+            dir="rtl"
+            className="w-full flex flex-col gap-3 bg-slate-200 my-5 rounded-lg"
+          >
+            <div>
+              <label className="form-control m-auto w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text-alt text-slate-500">کد ملی</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="1234567890"
+                  className="input input-bordered border-2 border-slate-600 text-darkCharcoal w-full max-w-xs bg-transparent"
+                />
+              </label>
+            </div>
+            <button className="btn w-80 mx-auto text-lg bg-primary-400 hover:bg-primary-400 text-darkCharcoal border-slate-300 hover:border-slate-500">
+              ثبت رزرو
+            </button>
+          </div>
         </div>
       </div>
     </div>

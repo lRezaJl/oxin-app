@@ -90,7 +90,7 @@ const PersianCalendar = ({ selectedDay, setSelectedDay }) => {
   return (
     <div
       dir="rtl"
-      className="w-full flex items-center justify-center bg-slate-200 py-4"
+      className="w-full flex items-center justify-center bg-slate-200 py-4 rounded-lg"
     >
       <button
         onClick={handlePrev}
