@@ -1,12 +1,23 @@
 "use client";
+import { useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import Login from "./LogIn";
 
 import { FaPowerOff } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 export default function Navbar() {
+  const [isCodeEntryVisible, setIsCodeEntryVisible] = useState(false);
+
+  const handleLoginClick = () => {
+    // وقتی دکمه ورود / ثبت نام کلیک شد، کامپوننت CodeEntry به DOM اضافه می‌شود
+    setIsCodeEntryVisible(true);
+  };
+
   return (
     <div id="navbar" className="">
       <div className="">
@@ -63,6 +74,25 @@ export default function Navbar() {
                 </div>
               </div>
             </div>
+
+            {/* --------------------------- */}
+            <div>
+              <button
+                onClick={handleLoginClick}
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              >
+                ورود / ثبت نام
+              </button>
+
+              {/* LogIn بدون شرط در DOM قرار دارد و با کلیک دکمه ظاهر می‌شود */}
+              {isCodeEntryVisible && (
+                <div className=" flex justify-center items-center w-full m-auto">
+                  <Login />
+                </div>
+              )}
+            </div>
+            {/* --------------------------- */}
+
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}

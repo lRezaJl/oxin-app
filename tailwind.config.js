@@ -39,6 +39,17 @@ module.exports = {
         hardWhite: "0px 2px 4px rgba(240, 245, 252,1)",
         hardDark: "0px 2px 4px rgba(240, 245, 252, 0.322)",
       },
+
+      animation: {
+        "spin-slow": "spin 10s steps(75) infinite",
+      },
+      keyframes: {
+        spin: {
+          "0%": { opacity: "0", transform: "rotate(0deg)" },
+          "50%": { opacity: "1" },
+          "100%": { opacity: "0", transform: "rotate(360deg)" },
+        },
+      },
     },
   },
   plugins: [require("daisyui")],

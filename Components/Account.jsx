@@ -55,7 +55,7 @@ const Card = () => {
         className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-300 flex justify-center items-start min-w-5 ${
           focusedCard.includes(1)
             ? "flex-[0.5] max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] max-xl:flex-[0.75]"
-            : "cursor-pointer"
+            : "max-lg:cursor-pointer"
         }`}
         onClick={() => handleFocus(1)}
       >
@@ -67,10 +67,10 @@ const Card = () => {
           }`}
         >
           <span
-            className={`text-center text-gray-800 text-xl font-bold transform transition-all duration-500 ${
+            className={`text-center hover:rotate-0 text-gray-800 text-xl font-bold transform transition-all duration-500 ${
               focusedCard.includes(1)
                 ? "rotate-0"
-                : "lg:hidden -rotate-90 top-[50%] cursor-pointer text-2xl max-sm:text-lg"
+                : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer text-2xl max-sm:text-lg"
             }`}
           >
             منو
@@ -142,22 +142,22 @@ const Card = () => {
         className={`relative flex-1 h-full overflow-hidden rounded-btn transition-all duration-500 bg-gray-800 flex justify-center items-start min-w-5 ${
           focusedCard.includes(2)
             ? "max-sm:flex-[10] max-md:flex-[10] max-lg:flex-[8] lg:flex-[2.7] xl:flex-[3]"
-            : "cursor-pointer"
+            : "max-lg:cursor-pointer"
         }`}
         onClick={() => handleFocus(2)}
       >
         <div
-          className={`absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
+          className={`lg:hidden absolute z-50 flex justify-center items-center min-w-[52rem] min-h-20 p-2 transform transition-all duration-500 text-gray-300 text-xl font-bold ${
             focusedCard.includes(2)
               ? "rotate-0 top-0"
               : "max-lg:w-full max-lg:h-full max-lg:backdrop-blur-lg"
           }`}
         >
           <span
-            className={`text-center transform transition-all duration-500 ${
+            className={`text-center md:hover:rotate-0 transform transition-all duration-500 ${
               focusedCard.includes(2)
                 ? "rotate-0"
-                : "lg:hidden -rotate-90 top-[50%] cursor-pointer"
+                : "lg:hidden -rotate-90 top-[50%] max-lg:cursor-pointer"
             }`}
           >
             {activeComponent === "ReserveList" && "رزرو ها"}
