@@ -4,20 +4,30 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import Login from "./LogIn";
+import LogIn from "./LogIn";
 
 import { FaPowerOff } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 export default function Navbar() {
-  const [isCodeEntryVisible, setIsCodeEntryVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // state برای نمایش مودال
 
-  const handleLoginClick = () => {
-    // وقتی دکمه ورود / ثبت نام کلیک شد، کامپوننت CodeEntry به DOM اضافه می‌شود
-    setIsCodeEntryVisible(true);
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.body.style.overflow = "hidden"; // غیرفعال کردن اسکرول
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = "auto"; // فعال کردن اسکرول
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target.id === "backdrop") {
+      closeModal();
+    }
+  };
   return (
     <div id="navbar" className="">
       <div className="">
@@ -78,16 +88,22 @@ export default function Navbar() {
             {/* --------------------------- */}
             <div>
               <button
-                onClick={handleLoginClick}
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                onClick={openModal} // باز کردن مودال هنگام کلیک
               >
                 ورود / ثبت نام
               </button>
 
-              {/* LogIn بدون شرط در DOM قرار دارد و با کلیک دکمه ظاهر می‌شود */}
-              {isCodeEntryVisible && (
-                <div className=" flex justify-center items-center w-full m-auto">
-                  <Login />
+              {isModalOpen && (
+                <div
+                  id="backdrop"
+                  className="fixed -mx-5  w-screen h-screen inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+                  onClick={handleOutsideClick} // بستن مودال هنگام کلیک روی پس‌زمینه
+                >
+                  <div className="bg-slate-50 p-8 rounded-lg shadow-lg">
+                    {/* محتوای کامپوننت LogIn */}
+                    <LogIn />
+                  </div>
                 </div>
               )}
             </div>
