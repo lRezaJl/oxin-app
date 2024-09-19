@@ -1,26 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
-
 import CheckCode from "./CheckCode";
-import { useUserStore } from "../context/userContext"; // مسیری که فایل userContext.js قرار دارد
 
 const Login = () => {
-  const { login, isCodeArrived } = useUserStore();
+  const [ codeSend, SetCodeSend ] = useState(false);
   const [phone, setPhone] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(phone);
-  };
 
   const handleLogin = async (phone) => {
     try {
-      const response = await axios.post(
-        "https://shekaf.liara.run/api/v1/phone/send/",
-        { phone }
-      );
-      console.log(response);
-      setIsCodeArrived(true);
+      const response = await axios.post(`/api/sendcode/`,{ phone });
+      SetCodeSend(true);
     } catch (error) {
       console.error(error);
     }
@@ -33,8 +22,8 @@ const Login = () => {
 
   return (
     <div>
-      {isCodeArrived ? (
-        <CheckCode />
+      {codeSend ? (
+        <CheckCode phone={phone} />
       ) : (
         <section dir="rtl" className="ss02">
           <div className="flex flex-col items-center justify-center sm:w-[300px] w-screen sm:px-0 px-5">

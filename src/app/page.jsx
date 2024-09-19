@@ -7,7 +7,6 @@ import Select from "../../components/Select";
 import PersianCalendar from "../../Components/PersianCalendarList";
 import BorderBeam from "../../Components/BorderBeam";
 import { utils } from "@amir04lm26/react-modern-calendar-date-picker";
-import { UserProvider } from "../../context/userContext";
 import LogIn from "../../components/LogIn";
 
 export default function HomePage() {
@@ -41,7 +40,6 @@ export default function HomePage() {
   }, [lastScrollY]);
 
   return (
-    <UserProvider>
       <div className="">
         <div className="mx-5">
           <div
@@ -95,6 +93,5 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </UserProvider>
   );
 }

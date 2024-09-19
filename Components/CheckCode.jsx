@@ -1,16 +1,26 @@
 import { useState, useEffect } from "react";
-import { useUserStore } from "../context/userContext"; // مسیری که فایل userContext.js قرار دارد
+import axios from "axios";
 
-const CheckCode = () => {
-  const { checkCode, isCodeArrived } = useUserStore();
+const CheckCode = (phone) => {
   const [code, setCode] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    checkCode(code);
+    try {
+      const response = await axios.post(`/api/login/`, { code, phone });
+    
+      if (response.status === 200) {
+        localStorage.setItem("access", response.data.access);
+        localStorage.setItem("refresh", response.data.refresh);
+        
+        location.reload();
+      }
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
   const [timeLeft, setTimeLeft] = useState(2 * 60); // 2 دقیقه
-  const user = useUserStore();
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -29,7 +39,7 @@ const CheckCode = () => {
     return () => clearInterval(timerInterval);
   }, [timeLeft]);
 
-  return user.isCodeArrived ? (
+  return (
     <section dir="rtl" className="ss02">
       <div className="flex flex-col items-center justify-center sm:w-[300px] w-screen sm:px-0 px-5">
         <div className="w-full bg-purewhite rounded-lg shadow">
@@ -91,7 +101,7 @@ const CheckCode = () => {
         </div>
       </div>
     </section>
-  ) : null;
+  );
 };
 
 export default CheckCode;

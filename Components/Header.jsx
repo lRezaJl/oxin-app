@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { UserRegistered } from "../utility/userRegister";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 export default function Navbar() {
+
   const [isModalOpen, setIsModalOpen] = useState(false); // state برای نمایش مودال
 
   const openModal = () => {
@@ -45,7 +47,7 @@ export default function Navbar() {
             />
           </div>
           <div className="flex-none">
-            <div className="dropdown dropdown-end">
+            {/*  <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
                 role="button"
@@ -83,10 +85,10 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* --------------------------- */}
-            <div>
+            {!UserRegistered() ? <div>
               <button
                 className="w-full text-white bg-primary-600 hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 onClick={openModal} // باز کردن مودال هنگام کلیک
@@ -101,22 +103,12 @@ export default function Navbar() {
                   onClick={handleOutsideClick} // بستن مودال هنگام کلیک روی پس‌زمینه
                 >
                   <div className="bg-slate-50 p-8 rounded-lg shadow-lg">
-                    {/* محتوای کامپوننت LogIn */}
                     <LogIn />
                   </div>
                 </div>
               )}
-            </div>
-            {/* --------------------------- */}
-
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">حساب کاربری</div>
-              </div>
+            </div> : <div className="dropdown dropdown-end">
+              <button className="w-full btn btn-ghost btn-circle avatar text-white bg-primary-600 hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">حساب کاربری</button>
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content bg-base-100/95 backdrop-saturate-150 backdrop-blur-lg rounded-box z-[1] mt-3 w-40 p-2 py-3 shadow space-y-2"
@@ -140,7 +132,8 @@ export default function Navbar() {
                   </span>
                 </li>
               </ul>
-            </div>
+            </div>}
+
           </div>
         </div>
       </div>
