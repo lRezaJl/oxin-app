@@ -1,1 +1,0 @@
-export const UserRegistered = () => !!localStorage.getItem("access");

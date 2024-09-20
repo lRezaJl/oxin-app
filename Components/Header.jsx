@@ -1,7 +1,5 @@
 "use client";
-import { useState } from "react";
-import { UserRegistered } from "../utility/userRegister";
-
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,6 +28,20 @@ export default function Navbar() {
       closeModal();
     }
   };
+
+  const UserRegistered = () => {
+    const [isRegistered, setIsRegistered] = useState(false);
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        const access = !!localStorage.getItem('access');
+        setIsRegistered(access);
+      }
+    }, []);
+  
+    return isRegistered;
+  };
+
   return (
     <div id="navbar" className="">
       <div className="">
